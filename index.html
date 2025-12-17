@@ -6,112 +6,182 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
-  margin:0;
-  font-family:Segoe UI,sans-serif;
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  height:100vh;
-  overflow:hidden;
+/* =====================================================
+   BASE + BMW WALLPAPER
+===================================================== */
+html, body {
+  height: 100%;
 }
 
-/* ===== BMW WALLPAPER ===== */
-.race-bg{
-  position:fixed;
-  inset:0;
-  z-index:-3;
-  background:url("bmw.jpg") center / cover no-repeat fixed;
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  color: white;
+  overflow: hidden;
+
+  /* BMW Image */
+  background-image: url("./bmw-wallpaper.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
-/* Dark overlay */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:rgba(2,6,23,.72);
-  z-index:-2;
+/* Dark cinematic glass */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.55);
+  z-index: -1;
 }
 
-/* ===== RACING LAYER ===== */
-.road{
-  position:absolute;
-  bottom:0;
-  width:300%;
-  height:45%;
-  background:repeating-linear-gradient(
-    90deg,#111 0,#111 60px,#eee 60px,#eee 120px);
-  opacity:.35;
+/* =====================================================
+   BMW HEADLIGHT REFLECTION (KEY EFFECT)
+===================================================== */
+body::after {
+  content: "";
+  position: fixed;
+  inset: -40%;
+  background:
+    linear-gradient(
+      115deg,
+      transparent 35%,
+      rgba(255,255,255,0.15) 45%,
+      rgba(255,255,255,0.35) 50%,
+      rgba(255,255,255,0.15) 55%,
+      transparent 65%
+    );
+  transform: translateX(-100%);
+  animation: headlightSweep 6s linear infinite;
+  mix-blend-mode: screen;
+  z-index: -1;
+  pointer-events: none;
 }
-.car{
-  position:absolute;
-  bottom:18%;
-  font-size:64px;
-  filter:drop-shadow(0 10px 30px rgba(0,0,0,.9));
-}
-.car1{ bottom:20% }
-.car2{ bottom:26%; font-size:56px }
-.car3{ bottom:14%; font-size:60px }
-.headlight{
-  position:absolute;
-  bottom:22%;
-  width:160px;
-  height:40px;
-  background:radial-gradient(circle,#fff,#fde68a,transparent);
-  filter:blur(14px);
-}
-.sparks{
-  position:absolute;
-  bottom:16%;
-  left:50%;
-  width:6px;height:6px;
-  background:#facc15;
-  box-shadow:0 0 10px #facc15,10px 6px 12px #fb7185;
-  border-radius:50%;
-  animation:spark .15s infinite alternate;
-}
-@keyframes spark{to{transform:translateY(-6px);opacity:.3}}
 
-/* ===== FORM ===== */
-.card{
-  background:#020617;
-  padding:32px;
-  border-radius:20px;
-  width:420px;
-  box-shadow:0 40px 90px rgba(0,0,0,.7);
-  text-align:center;
-  z-index:1;
+/* Reflection sweep animation */
+@keyframes headlightSweep {
+  0%   { transform: translateX(-100%) }
+  50%  { transform: translateX(100%) }
+  100% { transform: translateX(100%) }
 }
-input,select,button{
-  width:100%;
-  padding:12px;
-  margin-top:12px;
-  border-radius:10px;
-  border:none;
+
+/* =====================================================
+   RACING BACKGROUND LAYER
+===================================================== */
+.race-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
-button{
-  background:#22c55e;
-  font-weight:700;
-  cursor:pointer;
+
+.road {
+  position: absolute;
+  bottom: 0;
+  width: 300%;
+  height: 45%;
+  background: repeating-linear-gradient(
+    90deg,
+    #111 0,
+    #111 60px,
+    #eee 60px,
+    #eee 120px
+  );
+  opacity: 0.3;
 }
-.popup{
-  position:fixed;
-  top:25px;right:25px;
-  background:#22c55e;
-  color:black;
-  padding:14px 22px;
-  border-radius:12px;
-  display:none;
-  font-weight:bold;
+
+/* Cars */
+.car {
+  position: absolute;
+  bottom: 18%;
+  font-size: 64px;
+  filter: drop-shadow(0 10px 30px rgba(0,0,0,.9));
 }
-small{color:#94a3b8}
+
+.car1 { bottom: 20% }
+.car2 { bottom: 26%; font-size: 56px }
+.car3 { bottom: 14%; font-size: 60px }
+
+/* Headlight glow */
+.headlight {
+  position: absolute;
+  bottom: 22%;
+  width: 180px;
+  height: 50px;
+  background: radial-gradient(circle, #fff, #fde68a, transparent);
+  filter: blur(18px);
+  opacity: 0.6;
+}
+
+/* Sparks */
+.sparks {
+  position: absolute;
+  bottom: 16%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: #facc15;
+  box-shadow:
+    0 0 10px #facc15,
+    10px 6px 12px #fb7185;
+  border-radius: 50%;
+  animation: spark 0.15s infinite alternate;
+}
+
+@keyframes spark {
+  to { transform: translateY(-6px); opacity: .3 }
+}
+
+/* =====================================================
+   UI CARD
+===================================================== */
+.card {
+  position: relative;
+  z-index: 2;
+  background: rgba(2, 6, 23, 0.9);
+  backdrop-filter: blur(6px);
+  padding: 32px;
+  border-radius: 20px;
+  width: 420px;
+  box-shadow: 0 40px 90px rgba(0,0,0,.7);
+  text-align: center;
+}
+
+input, select, button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 10px;
+  border: none;
+}
+
+button {
+  background: #22c55e;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.popup {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  background: #22c55e;
+  color: black;
+  padding: 14px 22px;
+  border-radius: 12px;
+  display: none;
+  font-weight: bold;
+  z-index: 3;
+}
+
+small { color: #94a3b8 }
 </style>
 </head>
 
 <body>
 
-<!-- Wallpaper + Animation -->
+<!-- Racing Animation -->
 <div class="race-bg">
   <div class="road"></div>
   <div class="car car1">🏎️</div>
@@ -121,6 +191,7 @@ small{color:#94a3b8}
   <div class="sparks"></div>
 </div>
 
+<!-- UI -->
 <div class="card">
   <h2>🚗 AutoCare Plus</h2>
   <p>Submit Service Order</p>
@@ -146,6 +217,7 @@ import {
   onSnapshot, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 
+/* Firebase */
 const app = initializeApp({
   apiKey: "AIzaSyD9cPmUCMEtT7XukcAxmeS50jKh1A2f31Q",
   authDomain: "auto-care-plus-e7fdf.firebaseapp.com",
@@ -156,50 +228,52 @@ const app = initializeApp({
 });
 const db = getFirestore(app);
 
-time.innerText="🕒 "+new Date().toLocaleString();
+time.innerText = "🕒 " + new Date().toLocaleString();
 
-submit.onclick=async()=>{
-  await addDoc(collection(db,"jobs"),{
-    vehicleNumber:vehicle.value,
-    customerName:customer.value,
-    serviceType:service.value,
-    status:"NEW",
-    createdAt:serverTimestamp()
+/* Submit Order */
+submit.onclick = async () => {
+  await addDoc(collection(db, "jobs"), {
+    vehicleNumber: vehicle.value,
+    customerName: customer.value,
+    serviceType: service.value,
+    status: "NEW",
+    createdAt: serverTimestamp()
   });
-  popup.style.display="block";
-  setTimeout(()=>popup.style.display="none",2500);
+  popup.style.display = "block";
+  setTimeout(() => popup.style.display = "none", 2500);
 };
 
 /* ===== SPEED ENGINE ===== */
-let speed=12;
-const cars=document.querySelectorAll(".car");
-const road=document.querySelector(".road");
+let speed = 12;
+const cars = document.querySelectorAll(".car");
+const road = document.querySelector(".road");
 
-const style=document.createElement("style");
-style.innerHTML=`
-@keyframes drive{
-  0%{transform:translateX(-20vw)}
-  50%{transform:translateX(120vw)}
-  100%{transform:translateX(-20vw)}
+const style = document.createElement("style");
+style.innerHTML = `
+@keyframes drive {
+  0% { transform: translateX(-20vw) }
+  50% { transform: translateX(120vw) }
+  100% { transform: translateX(-20vw) }
 }
-@keyframes roadMove{to{transform:translateX(-50%)}}
-`;
+@keyframes roadMove {
+  to { transform: translateX(-50%) }
+}`;
 document.head.appendChild(style);
 
-function applySpeed(){
-  cars.forEach((c,i)=>{
-    c.style.animation=`drive ${speed+i*2}s linear infinite`;
+function applySpeed() {
+  cars.forEach((c, i) => {
+    c.style.animation = \`drive \${speed + i * 2}s linear infinite\`;
   });
-  road.style.animation=`roadMove ${speed/4}s linear infinite`;
+  road.style.animation = \`roadMove \${speed / 4}s linear infinite\`;
 }
 applySpeed();
 
-onSnapshot(collection(db,"jobs"),snap=>{
-  let load=0;
-  snap.forEach(d=>{
-    if(["REPAIR","QUALITY_CHECK"].includes(d.data().status)) load++;
+onSnapshot(collection(db, "jobs"), snap => {
+  let load = 0;
+  snap.forEach(d => {
+    if (["REPAIR", "QUALITY_CHECK"].includes(d.data().status)) load++;
   });
-  speed=Math.max(6,16-load);
+  speed = Math.max(6, 16 - load);
   applySpeed();
 });
 </script>
