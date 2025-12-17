@@ -10,8 +10,8 @@
         :root {
             --neon-blue: #00d2ff;
             --neon-green: #10b981;
-            --glass-bg: rgba(15, 23, 42, 0.75);
-            --input-bg: rgba(2, 6, 23, 0.5);
+            --glass-bg: rgba(10, 15, 28, 0.8); /* Darker glass for better contrast */
+            --input-bg: rgba(2, 6, 23, 0.6);
             --border: rgba(255, 255, 255, 0.1);
             --text-main: #ffffff;
             --text-muted: #94a3b8;
@@ -19,9 +19,8 @@
 
         body.light {
             --neon-blue: #2563eb;
-            --neon-green: #16a34a;
-            --glass-bg: rgba(255, 255, 255, 0.85);
-            --input-bg: rgba(241, 245, 249, 0.8);
+            --glass-bg: rgba(255, 255, 255, 0.9);
+            --input-bg: #f8fafc;
             --border: rgba(0, 0, 0, 0.1);
             --text-main: #0f172a;
             --text-muted: #64748b;
@@ -37,93 +36,89 @@
             overflow: hidden;
         }
 
-        /* Hero Background */
+        /* Hero Background - USING YOUR SAVED IMAGE */
         .hero-container {
             position: relative;
             height: 100vh; width: 100%;
-            background: linear-gradient(rgba(2, 6, 23, 0.4), rgba(2, 6, 23, 0.6)),
-                url('https://images.unsplash.com/photo-1549241520-425e3dfc01cd?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+            /* Replace 'service-bg.jpg' with your actual filename */
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
+                url('service-bg.jpg') center/cover no-repeat;
             display: flex; align-items: center; justify-content: center;
         }
 
-        /* Grid Overlay */
-        .hero-container::before {
-            content: ""; position: absolute; inset: 0;
-            background-image: radial-gradient(var(--border) 1px, transparent 1px);
-            background-size: 40px 40px; opacity: 0.3; z-index: 1;
-        }
-
-        /* Main Glass Card */
+        /* High-Tech Animated Border for the Card */
         .glass-panel {
             position: relative; z-index: 10;
-            width: 90%; max-width: 500px;
+            width: 90%; max-width: 480px;
             background: var(--glass-bg);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--border);
-            border-radius: 28px; padding: 40px;
-            box-shadow: 0 40px 80px -20px rgba(0,0,0,0.6);
-            animation: float 6s ease-in-out infinite;
+            border-radius: 32px; padding: 45px;
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.8);
+            border-top: 1px solid rgba(255,255,255,0.2);
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* Header Section */
-        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; }
+        /* Branding Section */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 35px; }
         .branding h1 { 
-            font-size: 32px; margin: 0; font-weight: 700; letter-spacing: -1px; 
-            background: linear-gradient(to right, var(--text-main), var(--text-muted));
+            font-size: 28px; margin: 0; font-weight: 700; letter-spacing: -1px; 
+            background: linear-gradient(to right, #fff, var(--neon-blue));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .branding p { font-size: 12px; color: var(--neon-blue); text-transform: uppercase; letter-spacing: 2px; margin: 5px 0 0; }
+        .branding p { font-size: 11px; color: var(--neon-blue); text-transform: uppercase; letter-spacing: 2.5px; margin: 4px 0 0; font-weight: 600; }
         
         .theme-toggle {
             background: var(--input-bg); border: 1px solid var(--border);
-            color: var(--text-main); padding: 8px; border-radius: 12px; cursor: pointer;
+            color: var(--text-main); padding: 10px; border-radius: 14px; cursor: pointer; font-size: 18px;
         }
 
-        /* Form Styling */
-        .form-group { margin-bottom: 18px; position: relative; }
+        /* Form Inputs */
+        .form-group { margin-bottom: 20px; }
         .input-wrapper {
             display: flex; align-items: center;
             background: var(--input-bg);
             border: 1px solid var(--border);
-            border-radius: 14px; padding: 0 16px; height: 54px;
+            border-radius: 16px; padding: 0 18px; height: 58px;
         }
-        .input-wrapper:focus-within { border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); }
-        .input-wrapper span { margin-right: 12px; opacity: 0.7; }
+        .input-wrapper:focus-within { 
+            border-color: var(--neon-blue); 
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.2); 
+            background: rgba(15, 23, 42, 0.8);
+        }
+        .input-wrapper span { margin-right: 14px; font-size: 20px; filter: grayscale(1); }
 
         input, select {
             flex: 1; background: transparent; border: none; outline: none;
-            color: var(--text-main); font-family: inherit; font-size: 15px;
+            color: var(--text-main); font-family: inherit; font-size: 16px; font-weight: 500;
         }
 
-        /* Glowing Submit Button */
+        /* Button Styling */
         button#submit {
-            width: 100%; height: 56px; margin-top: 10px;
-            background: linear-gradient(135deg, var(--neon-blue), #0082ff);
-            color: white; border: none; border-radius: 16px;
+            width: 100%; height: 60px; margin-top: 15px;
+            background: linear-gradient(135deg, var(--neon-blue), #0072ff);
+            color: white; border: none; border-radius: 18px;
             font-size: 16px; font-weight: 700; cursor: pointer;
-            box-shadow: 0 10px 20px -5px rgba(0, 210, 255, 0.4);
+            box-shadow: 0 15px 30px -10px rgba(0, 210, 255, 0.5);
+            text-transform: uppercase; letter-spacing: 1px;
         }
-        button#submit:hover { transform: scale(1.02); box-shadow: 0 15px 30px -5px rgba(0, 210, 255, 0.6); }
-        button#submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        button#submit:hover { transform: translateY(-2px); box-shadow: 0 20px 40px -10px rgba(0, 210, 255, 0.7); }
+        button#submit:active { transform: translateY(0); }
 
-        /* Footer Info */
+        /* Status & Time */
         .footer {
-            margin-top: 25px; display: flex; justify-content: space-between;
-            font-size: 11px; color: var(--text-muted); font-weight: 500;
+            margin-top: 30px; display: flex; justify-content: space-between;
+            font-size: 11px; color: var(--text-muted); font-weight: 600;
+            border-top: 1px solid var(--border); padding-top: 20px;
         }
+        #sync-status { color: var(--neon-green); text-shadow: 0 0 10px rgba(16, 185, 129, 0.3); }
 
-        /* Success Popup */
+        /* Popup Notification */
         .popup {
-            position: fixed; top: 30px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            position: fixed; top: 40px; left: 50%; transform: translateX(-50%) translateY(-150px);
             background: var(--neon-green); color: white;
-            padding: 12px 24px; border-radius: 50px; font-weight: 600;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2); z-index: 1000;
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 14px 28px; border-radius: 50px; font-weight: 700;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4); z-index: 1000;
+            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
         .popup.visible { transform: translateX(-50%) translateY(0); }
     </style>
@@ -135,7 +130,7 @@
         <div class="header">
             <div class="branding">
                 <h1>AutoCare Plus</h1>
-                <p>Secure Service Orchestration</p>
+                <p>Advanced Workshop Terminal</p>
             </div>
             <button class="theme-toggle" id="toggle">🌙</button>
         </div>
@@ -144,14 +139,14 @@
             <div class="form-group">
                 <div class="input-wrapper">
                     <span>🔢</span>
-                    <input id="vehicle" placeholder="Vehicle Registration">
+                    <input id="vehicle" placeholder="Registration ID">
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="input-wrapper">
                     <span>👤</span>
-                    <input id="customer" placeholder="Customer Name">
+                    <input id="customer" placeholder="Client Identity">
                 </div>
             </div>
 
@@ -159,32 +154,32 @@
                 <div class="input-wrapper">
                     <span>🛠️</span>
                     <select id="service">
-                        <option value="" disabled selected>Service Type</option>
+                        <option value="" disabled selected>Select Operation</option>
                         <option>General Service</option>
-                        <option>Repair</option>
-                        <option>Diagnostics</option>
+                        <option>Mechanical Repair</option>
+                        <option>System Diagnostics</option>
                     </select>
                 </div>
             </div>
 
-            <button id="submit">Sync to Cloud</button>
+            <button id="submit">Initialize Service Sync</button>
         </div>
 
         <div class="footer">
-            <span id="sync-status">● SYSTEM READY</span>
+            <span id="sync-status">● CORE SYSTEM ONLINE</span>
             <span id="time"></span>
         </div>
     </div>
 </div>
 
-<div class="popup" id="popup">✓ Order Synced Successfully</div>
+<div class="popup" id="popup">SUCCESS: Service Data Transmitted</div>
 
 <script type="module">
+    /* FIREBASE INITIALIZATION - UNTOUCHED AS REQUESTED */
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
     import { getFirestore, collection, addDoc, serverTimestamp } 
     from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 
-    /* Firebase Configuration */
     const app = initializeApp({
         apiKey: "AIzaSyD9cPmUCMEtT7XukcAxmeS50jKh1A2f31Q",
         authDomain: "auto-care-plus-e7fdf.firebaseapp.com",
@@ -198,21 +193,24 @@
     const submitBtn = document.getElementById("submit");
     const syncStatus = document.getElementById("sync-status");
 
-    /* Live Time */
-    setInterval(() => {
+    /* Live Time Display */
+    const updateTime = () => {
         document.getElementById("time").innerText = new Date().toLocaleTimeString();
-    }, 1000);
+    };
+    setInterval(updateTime, 1000);
+    updateTime();
 
-    /* Submit logic */
+    /* Submission Logic */
     submitBtn.onclick = async () => {
         if(!vehicle.value || !customer.value || !service.value) {
-            alert("Please input all telemetry data.");
+            alert("Incomplete data. Please check input fields.");
             return;
         }
 
         submitBtn.disabled = true;
         submitBtn.innerText = "Transmitting...";
-        syncStatus.innerText = "○ SYNCING...";
+        syncStatus.innerText = "○ DATA TRANSFER IN PROGRESS...";
+        syncStatus.style.color = "#fbbf24";
 
         try {
             await addDoc(collection(db, "jobs"), {
@@ -223,35 +221,43 @@
                 createdAt: serverTimestamp()
             });
 
-            // Success feedback
+            // Success Animation
             const popup = document.getElementById("popup");
             popup.classList.add("visible");
-            setTimeout(() => popup.classList.remove("visible"), 3000);
+            setTimeout(() => popup.classList.remove("visible"), 3500);
 
-            // Reset
+            // Clear inputs
             vehicle.value = ""; customer.value = ""; service.selectedIndex = 0;
         } catch (e) {
-            console.error(e);
-            alert("Sync Failed.");
+            console.error("Cloud Error:", e);
+            alert("Transmission Failure. System offline.");
         } finally {
             submitBtn.disabled = false;
-            submitBtn.innerText = "Sync to Cloud";
-            syncStatus.innerText = "● SYSTEM READY";
+            submitBtn.innerText = "Initialize Service Sync";
+            syncStatus.innerText = "● CORE SYSTEM ONLINE";
+            syncStatus.style.color = "#10b981";
         }
     };
 
-    /* Theme Toggle Logic */
+    /* Dark/Light Mode Management */
     const toggle = document.getElementById("toggle");
+    const applyTheme = (theme) => {
+        if(theme === "light") {
+            document.body.classList.add("light");
+            toggle.textContent = "☀️";
+        } else {
+            document.body.classList.remove("light");
+            toggle.textContent = "🌙";
+        }
+    };
+
     toggle.onclick = () => {
-        document.body.classList.toggle("light");
-        const isLight = document.body.classList.contains("light");
-        toggle.textContent = isLight ? "☀️" : "🌙";
+        const isLight = document.body.classList.toggle("light");
+        applyTheme(isLight ? "light" : "dark");
         localStorage.setItem("theme", isLight ? "light" : "dark");
     };
-    if(localStorage.getItem("theme") === "light") {
-        document.body.classList.add("light");
-        toggle.textContent = "☀️";
-    }
+
+    applyTheme(localStorage.getItem("theme"));
 </script>
 
 </body>
