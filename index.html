@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* ===== GLOBAL ===== */
 body{
   margin:0;
   font-family:Segoe UI,sans-serif;
@@ -18,196 +17,17 @@ body{
   overflow:hidden;
 }
 
-/* ===== RACING BACKGROUND ===== */
+/* ===== BMW WALLPAPER ===== */
 .race-bg{
   position:fixed;
   inset:0;
-  z-index:-2;
-  background:radial-gradient(circle at top,#020617,#000);
+  z-index:-3;
+  background:url("bmw.jpg") center / cover no-repeat fixed;
 }
-.road{
-  position:absolute;
-  bottom:0;
-  width:300%;
-  height:45%;
-  background:repeating-linear-gradient(
-    90deg,#111 0,#111 60px,#eee 60px,#eee 120px);
-  opacity:.35;
-}
-.car{
-  position:absolute;
-  bottom:18%;
-  font-size:64px;
-  filter:drop-shadow(0 10px 30px rgba(0,0,0,.9));
-}
-.car1{ bottom:20% }
-.car2{ bottom:26%; font-size:56px }
-.car3{ bottom:14%; font-size:60px }
-.headlight{
-  position:absolute;
-  bottom:22%;
-  width:160px;
-  height:40px;
-  background:radial-gradient(circle,#fff,#fde68a,transparent);
-  filter:blur(14px);
-  opacity:.6;
-}
-.sparks{
-  position:absolute;
-  bottom:16%;
-  left:50%;
-  width:6px;height:6px;
-  background:#facc15;
-  box-shadow:0 0 10px #facc15,10px 6px 12px #fb7185;
-  border-radius:50%;
-  animation:spark .15s infinite alternate;
-}
-@keyframes spark{to{transform:translateY(-6px);opacity:.3}}
 
+/* Dark overlay */
 body::before{
   content:"";
   position:fixed;
   inset:0;
-  background:rgba(2,6,23,.75);
-  z-index:-1;
-}
-
-/* ===== FORM CARD ===== */
-.card{
-  background:#020617;
-  padding:32px;
-  border-radius:20px;
-  width:420px;
-  box-shadow:0 40px 90px rgba(0,0,0,.7);
-  text-align:center;
-}
-input,select,button{
-  width:100%;
-  padding:12px;
-  margin-top:12px;
-  border-radius:10px;
-  border:none;
-}
-button{
-  background:#22c55e;
-  font-weight:700;
-  cursor:pointer;
-}
-.popup{
-  position:fixed;
-  top:25px;right:25px;
-  background:#22c55e;color:black;
-  padding:14px 22px;
-  border-radius:12px;
-  display:none;
-  font-weight:bold;
-}
-small{color:#94a3b8}
-</style>
-</head>
-
-<body>
-
-<!-- Racing Background -->
-<div class="race-bg">
-  <div class="road"></div>
-  <div class="car car1">🏎️</div>
-  <div class="car car2">🚗</div>
-  <div class="car car3">🚙</div>
-  <div class="headlight"></div>
-  <div class="sparks"></div>
-</div>
-
-<div class="card">
-  <h2>🚗 AutoCare Plus</h2>
-  <p>Submit Service Order</p>
-
-  <input id="vehicle" placeholder="Vehicle Number" required>
-  <input id="customer" placeholder="Customer Name" required>
-  <select id="service">
-    <option>General Service</option>
-    <option>Repair</option>
-    <option>Diagnostics</option>
-  </select>
-
-  <button id="submit">Submit Order</button>
-  <small id="time"></small>
-</div>
-
-<div class="popup" id="popup">✅ Order Submitted Successfully</div>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
-import {
-  getFirestore, collection, addDoc,
-  onSnapshot, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
-
-/* Firebase */
-const app = initializeApp({
-  apiKey: "AIzaSyD9cPmUCMEtT7XukcAxmeS50jKh1A2f31Q",
-  authDomain: "auto-care-plus-e7fdf.firebaseapp.com",
-  projectId: "auto-care-plus-e7fdf",
-  storageBucket: "auto-care-plus-e7fdf.firebasestorage.app",
-  messagingSenderId: "746107164946",
-  appId: "1:746107164946:web:5951433bf11f0cadedfbcb"
-});
-const db = getFirestore(app);
-
-/* Time */
-time.innerText="🕒 "+new Date().toLocaleString();
-
-/* Submit Order */
-submit.onclick=async()=>{
-  await addDoc(collection(db,"jobs"),{
-    vehicleNumber:vehicle.value,
-    customerName:customer.value,
-    serviceType:service.value,
-    status:"NEW",
-    createdAt:serverTimestamp()
-  });
-  popup.style.display="block";
-  setTimeout(()=>popup.style.display="none",2500);
-  vehicle.value="";customer.value="";
-};
-
-/* ===== REAL-TIME SPEED ENGINE ===== */
-let speed=12;
-const cars=document.querySelectorAll(".car");
-const road=document.querySelector(".road");
-
-const style=document.createElement("style");
-style.innerHTML=`
-@keyframes drive{
-  0%{transform:translateX(-20vw) scaleX(1)}
-  45%{transform:translateX(120vw) scaleX(1)}
-  50%{transform:translateX(120vw) scaleX(-1)}
-  95%{transform:translateX(-20vw) scaleX(-1)}
-  100%{transform:translateX(-20vw) scaleX(1)}
-}
-@keyframes roadMove{
-  to{transform:translateX(-50%)}
-}`;
-document.head.appendChild(style);
-
-function applySpeed(){
-  cars.forEach((c,i)=>{
-    c.style.animation=`drive ${speed+i*2}s linear infinite`;
-  });
-  road.style.animation=`roadMove ${speed/4}s linear infinite`;
-}
-applySpeed();
-
-/* Firestore → speed */
-onSnapshot(collection(db,"jobs"),snap=>{
-  let load=0;
-  snap.forEach(d=>{
-    if(["REPAIR","QUALITY_CHECK"].includes(d.data().status)) load++;
-  });
-  speed=Math.max(6,16-load);
-  applySpeed();
-});
-</script>
-
-</body>
-</html>
+  background:rgba(
