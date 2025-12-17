@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AutoCare Plus | Login</title>
+  <title>AutoCare Plus | Staff Login</title>
 </head>
 <body>
 
 <h2>Staff Login</h2>
 
-<input id="email" placeholder="Email"><br><br>
+<input id="email" type="email" placeholder="Email"><br><br>
 <input id="password" type="password" placeholder="Password"><br><br>
 <button onclick="login()">Login</button>
 
@@ -33,8 +33,8 @@
     try {
       await signInWithEmailAndPassword(auth, email.value, password.value);
       window.location.href = "kanban.html";
-    } catch (e) {
-      msg.innerText = e.message;
+    } catch (err) {
+      msg.innerText = err.message;
     }
   };
 </script>
