@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AutoCare Plus | Login</title>
+</head>
+<body>
+
+<h2>Staff Login</h2>
+
+<input id="email" placeholder="Email"><br><br>
+<input id="password" type="password" placeholder="Password"><br><br>
+<button onclick="login()">Login</button>
+
+<p id="msg"></p>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD9cPmUCMEtT7XukcAxmeS50jKh1A2f31Q",
+    authDomain: "auto-care-plus-e7fdf.firebaseapp.com",
+    projectId: "auto-care-plus-e7fdf",
+    storageBucket: "auto-care-plus-e7fdf.firebasestorage.app",
+    messagingSenderId: "746107164946",
+    appId: "1:746107164946:web:5951433bf11f0cadedfbcb"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  window.login = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email.value, password.value);
+      window.location.href = "kanban.html";
+    } catch (e) {
+      msg.innerText = e.message;
+    }
+  };
+</script>
+
+</body>
+</html>
