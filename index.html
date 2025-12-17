@@ -30,4 +30,179 @@ body::before{
   content:"";
   position:fixed;
   inset:0;
-  background:rgba(
+  background:rgba(2,6,23,.72);
+  z-index:-2;
+}
+
+/* ===== RACING LAYER ===== */
+.road{
+  position:absolute;
+  bottom:0;
+  width:300%;
+  height:45%;
+  background:repeating-linear-gradient(
+    90deg,#111 0,#111 60px,#eee 60px,#eee 120px);
+  opacity:.35;
+}
+.car{
+  position:absolute;
+  bottom:18%;
+  font-size:64px;
+  filter:drop-shadow(0 10px 30px rgba(0,0,0,.9));
+}
+.car1{ bottom:20% }
+.car2{ bottom:26%; font-size:56px }
+.car3{ bottom:14%; font-size:60px }
+.headlight{
+  position:absolute;
+  bottom:22%;
+  width:160px;
+  height:40px;
+  background:radial-gradient(circle,#fff,#fde68a,transparent);
+  filter:blur(14px);
+}
+.sparks{
+  position:absolute;
+  bottom:16%;
+  left:50%;
+  width:6px;height:6px;
+  background:#facc15;
+  box-shadow:0 0 10px #facc15,10px 6px 12px #fb7185;
+  border-radius:50%;
+  animation:spark .15s infinite alternate;
+}
+@keyframes spark{to{transform:translateY(-6px);opacity:.3}}
+
+/* ===== FORM ===== */
+.card{
+  background:#020617;
+  padding:32px;
+  border-radius:20px;
+  width:420px;
+  box-shadow:0 40px 90px rgba(0,0,0,.7);
+  text-align:center;
+  z-index:1;
+}
+input,select,button{
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  border-radius:10px;
+  border:none;
+}
+button{
+  background:#22c55e;
+  font-weight:700;
+  cursor:pointer;
+}
+.popup{
+  position:fixed;
+  top:25px;right:25px;
+  background:#22c55e;
+  color:black;
+  padding:14px 22px;
+  border-radius:12px;
+  display:none;
+  font-weight:bold;
+}
+small{color:#94a3b8}
+</style>
+</head>
+
+<body>
+
+<!-- Wallpaper + Animation -->
+<div class="race-bg">
+  <div class="road"></div>
+  <div class="car car1">🏎️</div>
+  <div class="car car2">🚗</div>
+  <div class="car car3">🚙</div>
+  <div class="headlight"></div>
+  <div class="sparks"></div>
+</div>
+
+<div class="card">
+  <h2>🚗 AutoCare Plus</h2>
+  <p>Submit Service Order</p>
+
+  <input id="vehicle" placeholder="Vehicle Number">
+  <input id="customer" placeholder="Customer Name">
+  <select id="service">
+    <option>General Service</option>
+    <option>Repair</option>
+    <option>Diagnostics</option>
+  </select>
+
+  <button id="submit">Submit Order</button>
+  <small id="time"></small>
+</div>
+
+<div class="popup" id="popup">✅ Order Submitted Successfully</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+import {
+  getFirestore, collection, addDoc,
+  onSnapshot, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+
+const app = initializeApp({
+  apiKey: "AIzaSyD9cPmUCMEtT7XukcAxmeS50jKh1A2f31Q",
+  authDomain: "auto-care-plus-e7fdf.firebaseapp.com",
+  projectId: "auto-care-plus-e7fdf",
+  storageBucket: "auto-care-plus-e7fdf.firebasestorage.app",
+  messagingSenderId: "746107164946",
+  appId: "1:746107164946:web:5951433bf11f0cadedfbcb"
+});
+const db = getFirestore(app);
+
+time.innerText="🕒 "+new Date().toLocaleString();
+
+submit.onclick=async()=>{
+  await addDoc(collection(db,"jobs"),{
+    vehicleNumber:vehicle.value,
+    customerName:customer.value,
+    serviceType:service.value,
+    status:"NEW",
+    createdAt:serverTimestamp()
+  });
+  popup.style.display="block";
+  setTimeout(()=>popup.style.display="none",2500);
+};
+
+/* ===== SPEED ENGINE ===== */
+let speed=12;
+const cars=document.querySelectorAll(".car");
+const road=document.querySelector(".road");
+
+const style=document.createElement("style");
+style.innerHTML=`
+@keyframes drive{
+  0%{transform:translateX(-20vw)}
+  50%{transform:translateX(120vw)}
+  100%{transform:translateX(-20vw)}
+}
+@keyframes roadMove{to{transform:translateX(-50%)}}
+`;
+document.head.appendChild(style);
+
+function applySpeed(){
+  cars.forEach((c,i)=>{
+    c.style.animation=`drive ${speed+i*2}s linear infinite`;
+  });
+  road.style.animation=`roadMove ${speed/4}s linear infinite`;
+}
+applySpeed();
+
+onSnapshot(collection(db,"jobs"),snap=>{
+  let load=0;
+  snap.forEach(d=>{
+    if(["REPAIR","QUALITY_CHECK"].includes(d.data().status)) load++;
+  });
+  speed=Math.max(6,16-load);
+  applySpeed();
+});
+</script>
+
+</body>
+</html>
