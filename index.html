@@ -1,310 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>AutoCare Plus | Submit Order</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>AutoCare Plus | Command Center</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --neon-blue: #00d2ff;
+            --neon-green: #10b981;
+            --glass-bg: rgba(15, 23, 42, 0.75);
+            --input-bg: rgba(2, 6, 23, 0.5);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
 
-<style>
-/* ================= THEME VARIABLES ================= */
-:root{
-  --bg-main:#0b1020;
-  --card-bg:rgba(15,23,42,.92);
-  --input-bg:#020617;
-  --border:rgba(255,255,255,.06);
-  --text:#ffffff;
-  --muted:#9ca3af;
-  --accent:#22c55e;
-}
+        body.light {
+            --neon-blue: #2563eb;
+            --neon-green: #16a34a;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --input-bg: rgba(241, 245, 249, 0.8);
+            --border: rgba(0, 0, 0, 0.1);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+        }
 
-body.light{
-  --bg-main:#f8fafc;
-  --card-bg:#ffffff;
-  --input-bg:#f1f5f9;
-  --border:#e5e7eb;
-  --text:#020617;
-  --muted:#64748b;
-  --accent:#16a34a;
-}
+        * { box-sizing: border-box; transition: all 0.3s ease; }
 
-/* ================= BASE ================= */
-html,body{height:100%}
-body{
-  margin:0;
-  font-family:"Inter","Segoe UI",sans-serif;
-  background:var(--bg-main);
-  color:var(--text);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  transition:background .3s,color .3s;
-}
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #020617;
+            color: var(--text-main);
+            overflow: hidden;
+        }
 
-/* ================= BACKGROUND ================= */
-.bg{
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at top,#1e293b,transparent);
-  z-index:-2;
-}
-body.light .bg{
-  background:radial-gradient(circle at top,#e2e8f0,transparent);
-}
+        /* Hero Background */
+        .hero-container {
+            position: relative;
+            height: 100vh; width: 100%;
+            background: linear-gradient(rgba(2, 6, 23, 0.4), rgba(2, 6, 23, 0.6)),
+                url('https://images.unsplash.com/photo-1549241520-425e3dfc01cd?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+            display: flex; align-items: center; justify-content: center;
+        }
 
-/* Road (subtle) */
-.road{
-  position:fixed;
-  bottom:-12%;
-  width:300%;
-  height:36%;
-  background:repeating-linear-gradient(
-    90deg,#cbd5e1 0,#cbd5e1 70px,#e5e7eb 70px,#e5e7eb 140px);
-  opacity:.15;
-  animation:roadMove 14s linear infinite;
-  z-index:-1;
-}
-@keyframes roadMove{
-  to{transform:translateX(-50%)}
-}
-body.light .road{opacity:.08}
+        /* Grid Overlay */
+        .hero-container::before {
+            content: ""; position: absolute; inset: 0;
+            background-image: radial-gradient(var(--border) 1px, transparent 1px);
+            background-size: 40px 40px; opacity: 0.3; z-index: 1;
+        }
 
-/* Cars */
-.car{
-  position:fixed;
-  bottom:6%;
-  font-size:40px;
-  opacity:.45;
-  animation:drive 20s linear infinite;
-}
-.car:nth-child(1){animation-duration:22s}
-.car:nth-child(2){animation-duration:26s}
-.car:nth-child(3){animation-duration:30s}
+        /* Main Glass Card */
+        .glass-panel {
+            position: relative; z-index: 10;
+            width: 90%; max-width: 500px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 28px; padding: 40px;
+            box-shadow: 0 40px 80px -20px rgba(0,0,0,0.6);
+            animation: float 6s ease-in-out infinite;
+        }
 
-@keyframes drive{
-  from{transform:translateX(-20vw)}
-  to{transform:translateX(120vw)}
-}
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
 
-/* ================= CARD ================= */
-.card{
-  width:420px;
-  background:var(--card-bg);
-  border-radius:20px;
-  padding:28px 28px 30px;
-  box-shadow:0 30px 80px rgba(0,0,0,.25);
-  transition:background .3s;
-}
+        /* Header Section */
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; }
+        .branding h1 { 
+            font-size: 32px; margin: 0; font-weight: 700; letter-spacing: -1px; 
+            background: linear-gradient(to right, var(--text-main), var(--text-muted));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .branding p { font-size: 12px; color: var(--neon-blue); text-transform: uppercase; letter-spacing: 2px; margin: 5px 0 0; }
+        
+        .theme-toggle {
+            background: var(--input-bg); border: 1px solid var(--border);
+            color: var(--text-main); padding: 8px; border-radius: 12px; cursor: pointer;
+        }
 
-/* Header */
-.header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:6px;
-}
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-/* Add styles for the header image */
-.brand img{
-  width: 50px;
-  height: 50px;
-  border-radius: 10px;
-  object-fit: cover;
-}
-.brand h1{
-  font-size:20px;
-  font-weight:600;
-  margin:0;
-}
+        /* Form Styling */
+        .form-group { margin-bottom: 18px; position: relative; }
+        .input-wrapper {
+            display: flex; align-items: center;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px; padding: 0 16px; height: 54px;
+        }
+        .input-wrapper:focus-within { border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); }
+        .input-wrapper span { margin-right: 12px; opacity: 0.7; }
 
-/* Toggle */
-.toggle{
-  cursor:pointer;
-  font-size:16px;
-  padding:6px 10px;
-  border-radius:8px;
-  background:var(--input-bg);
-  border:1px solid var(--border);
-}
+        input, select {
+            flex: 1; background: transparent; border: none; outline: none;
+            color: var(--text-main); font-family: inherit; font-size: 15px;
+        }
 
-/* Subtitle */
-.subtitle{
-  font-size:13px;
-  color:var(--muted);
-  margin-bottom:22px;
-}
+        /* Glowing Submit Button */
+        button#submit {
+            width: 100%; height: 56px; margin-top: 10px;
+            background: linear-gradient(135deg, var(--neon-blue), #0082ff);
+            color: white; border: none; border-radius: 16px;
+            font-size: 16px; font-weight: 700; cursor: pointer;
+            box-shadow: 0 10px 20px -5px rgba(0, 210, 255, 0.4);
+        }
+        button#submit:hover { transform: scale(1.02); box-shadow: 0 15px 30px -5px rgba(0, 210, 255, 0.6); }
+        button#submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-/* ================= FORM ================= */
-.form{
-  display:grid;
-  gap:14px;
-}
+        /* Footer Info */
+        .footer {
+            margin-top: 25px; display: flex; justify-content: space-between;
+            font-size: 11px; color: var(--text-muted); font-weight: 500;
+        }
 
-.field{
-  display:flex;
-  align-items:center;
-  background:var(--input-bg);
-  border-radius:12px;
-  padding:0 14px;
-  height:46px;
-  border:1px solid var(--border);
-}
-.field span{
-  opacity:.6;
-  font-size:14px;
-  margin-right:10px;
-}
-.field input,
-.field select{
-  flex:1;
-  background:none;
-  border:none;
-  outline:none;
-  color:var(--text);
-  font-size:14px;
-}
-
-/* Button */
-button{
-  margin-top:10px;
-  height:44px;
-  border-radius:12px;
-  border:none;
-  background:var(--accent);
-  color:#052e16;
-  font-weight:600;
-  font-size:14px;
-  cursor:pointer;
-}
-
-/* Footer */
-.footer{
-  display:flex;
-  justify-content:space-between;
-  margin-top:14px;
-  font-size:11px;
-  color:var(--muted);
-}
-
-/* Popup */
-.popup{
-  position:fixed;
-  top:20px;
-  right:20px;
-  background:var(--accent);
-  color:#052e16;
-  padding:12px 18px;
-  border-radius:10px;
-  font-size:13px;
-  font-weight:600;
-  display:none;
-}
-</style>
+        /* Success Popup */
+        .popup {
+            position: fixed; top: 30px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            background: var(--neon-green); color: white;
+            padding: 12px 24px; border-radius: 50px; font-weight: 600;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2); z-index: 1000;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .popup.visible { transform: translateX(-50%) translateY(0); }
+    </style>
 </head>
-
 <body>
 
-<div class="bg"></div>
-<div class="road"></div>
+<div class="hero-container">
+    <div class="glass-panel">
+        <div class="header">
+            <div class="branding">
+                <h1>AutoCare Plus</h1>
+                <p>Secure Service Orchestration</p>
+            </div>
+            <button class="theme-toggle" id="toggle">🌙</button>
+        </div>
 
-<div class="car">🏎️</div>
-<div class="car">🚗</div>
-<div class="car">🚙</div>
+        <div class="form">
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <span>🔢</span>
+                    <input id="vehicle" placeholder="Vehicle Registration">
+                </div>
+            </div>
 
-<div class="card">
-  <div class="header">
-    <div class="brand">
-            <img src="image_0.png" alt="Car Logo">
-      <h1>AutoCare Plus</h1>
-    </div>
-    <div class="toggle" id="toggle">🌙</div>
-  </div>
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <span>👤</span>
+                    <input id="customer" placeholder="Customer Name">
+                </div>
+            </div>
 
-  <div class="subtitle">Smart vehicle service orchestration</div>
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <span>🛠️</span>
+                    <select id="service">
+                        <option value="" disabled selected>Service Type</option>
+                        <option>General Service</option>
+                        <option>Repair</option>
+                        <option>Diagnostics</option>
+                    </select>
+                </div>
+            </div>
 
-  <div class="form">
-    <div class="field">
-      <span>🔢</span>
-      <input id="vehicle" placeholder="Vehicle registration">
-    </div>
+            <button id="submit">Sync to Cloud</button>
+        </div>
 
-    <div class="field">
-      <span>👤</span>
-      <input id="customer" placeholder="Customer name">
-    </div>
-
-    <div class="field">
-      <span>🛠️</span>
-      <select id="service">
-        <option>General Service</option>
-        <option>Repair</option>
-        <option>Diagnostics</option>
-      </select>
-    </div>
-
-    <button id="submit">Submit Service Order</button>
-  </div>
-
-  <div class="footer">
-    <span>Live system • Real-time sync</span>
-    <span id="time"></span>
-  </div>
+        <div class="footer">
+            <span id="sync-status">● SYSTEM READY</span>
+            <span id="time"></span>
+        </div>
+    </div>
 </div>
 
-<div class="popup" id="popup">Order submitted successfully</div>
+<div class="popup" id="popup">✓ Order Synced Successfully</div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp }
-from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } 
+    from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 
-/* Firebase */
-const app = initializeApp({
-  apiKey: "AIzaSyD9cPmUCMEtT7XukcAxmeS50jKh1A2f31Q",
-  authDomain: "auto-care-plus-e7fdf.firebaseapp.com",
-  projectId: "auto-care-plus-e7fdf",
-  storageBucket: "auto-care-plus-e7fdf.firebasestorage.app",
-  messagingSenderId: "746107164946",
-  appId: "1:746107164946:web:5951433bf11f0cadedfbcb"
-});
-const db = getFirestore(app);
+    /* Firebase Configuration */
+    const app = initializeApp({
+        apiKey: "AIzaSyD9cPmUCMEtT7XukcAxmeS50jKh1A2f31Q",
+        authDomain: "auto-care-plus-e7fdf.firebaseapp.com",
+        projectId: "auto-care-plus-e7fdf",
+        storageBucket: "auto-care-plus-e7fdf.firebasestorage.app",
+        messagingSenderId: "746107164946",
+        appId: "1:746107164946:web:5951433bf11f0cadedfbcb"
+    });
+    const db = getFirestore(app);
 
-/* Time */
-time.innerText = new Date().toLocaleString();
+    const submitBtn = document.getElementById("submit");
+    const syncStatus = document.getElementById("sync-status");
 
-/* Submit */
-submit.onclick = async()=>{
-  await addDoc(collection(db,"jobs"),{
-    vehicleNumber:vehicle.value,
-    customerName:customer.value,
-    serviceType:service.value,
-    status:"NEW",
-    createdAt:serverTimestamp()
-  });
-  popup.style.display="block";
-  setTimeout(()=>popup.style.display="none",2000);
-};
+    /* Live Time */
+    setInterval(() => {
+        document.getElementById("time").innerText = new Date().toLocaleTimeString();
+    }, 1000);
 
-/* ===== DARK / LIGHT TOGGLE ===== */
-const toggle=document.getElementById("toggle");
-const savedTheme=localStorage.getItem("theme");
+    /* Submit logic */
+    submitBtn.onclick = async () => {
+        if(!vehicle.value || !customer.value || !service.value) {
+            alert("Please input all telemetry data.");
+            return;
+        }
 
-if(savedTheme==="light"){
-  document.body.classList.add("light");
-  toggle.textContent="☀️";
-}
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Transmitting...";
+        syncStatus.innerText = "○ SYNCING...";
 
-toggle.onclick=()=>{
-  document.body.classList.toggle("light");
-  const isLight=document.body.classList.contains("light");
-  toggle.textContent=isLight?"☀️":"🌙";
-  localStorage.setItem("theme",isLight?"light":"dark");
-};
+        try {
+            await addDoc(collection(db, "jobs"), {
+                vehicleNumber: vehicle.value,
+                customerName: customer.value,
+                serviceType: service.value,
+                status: "NEW",
+                createdAt: serverTimestamp()
+            });
+
+            // Success feedback
+            const popup = document.getElementById("popup");
+            popup.classList.add("visible");
+            setTimeout(() => popup.classList.remove("visible"), 3000);
+
+            // Reset
+            vehicle.value = ""; customer.value = ""; service.selectedIndex = 0;
+        } catch (e) {
+            console.error(e);
+            alert("Sync Failed.");
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Sync to Cloud";
+            syncStatus.innerText = "● SYSTEM READY";
+        }
+    };
+
+    /* Theme Toggle Logic */
+    const toggle = document.getElementById("toggle");
+    toggle.onclick = () => {
+        document.body.classList.toggle("light");
+        const isLight = document.body.classList.contains("light");
+        toggle.textContent = isLight ? "☀️" : "🌙";
+        localStorage.setItem("theme", isLight ? "light" : "dark");
+    };
+    if(localStorage.getItem("theme") === "light") {
+        document.body.classList.add("light");
+        toggle.textContent = "☀️";
+    }
 </script>
 
 </body>
