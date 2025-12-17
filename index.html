@@ -8,195 +8,201 @@
 <style>
 /* ================= THEME VARIABLES ================= */
 :root{
-  --bg-main:#0b1020;
-  --card-bg:rgba(15,23,42,.92);
-  --input-bg:#020617;
-  --border:rgba(255,255,255,.06);
-  --text:#ffffff;
-  --muted:#9ca3af;
-  --accent:#22c55e;
+  --bg-main:#0b1020;
+  --card-bg:rgba(15,23,42,.92);
+  --input-bg:#020617;
+  --border:rgba(255,255,255,.06);
+  --text:#ffffff;
+  --muted:#9ca3af;
+  --accent:#22c55e;
 }
 
 body.light{
-  --bg-main:#f8fafc;
-  --card-bg:#ffffff;
-  --input-bg:#f1f5f9;
-  --border:#e5e7eb;
-  --text:#020617;
-  --muted:#64748b;
-  --accent:#16a34a;
+  --bg-main:#f8fafc;
+  --card-bg:#ffffff;
+  --input-bg:#f1f5f9;
+  --border:#e5e7eb;
+  --text:#020617;
+  --muted:#64748b;
+  --accent:#16a34a;
 }
 
 /* ================= BASE ================= */
 html,body{height:100%}
 body{
-  margin:0;
-  font-family:"Inter","Segoe UI",sans-serif;
-  background:var(--bg-main);
-  color:var(--text);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  transition:background .3s,color .3s;
+  margin:0;
+  font-family:"Inter","Segoe UI",sans-serif;
+  background:var(--bg-main);
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  transition:background .3s,color .3s;
 }
 
 /* ================= BACKGROUND ================= */
 .bg{
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at top,#1e293b,transparent);
-  z-index:-2;
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at top,#1e293b,transparent);
+  z-index:-2;
 }
 body.light .bg{
-  background:radial-gradient(circle at top,#e2e8f0,transparent);
+  background:radial-gradient(circle at top,#e2e8f0,transparent);
 }
 
 /* Road (subtle) */
 .road{
-  position:fixed;
-  bottom:-12%;
-  width:300%;
-  height:36%;
-  background:repeating-linear-gradient(
-    90deg,#cbd5e1 0,#cbd5e1 70px,#e5e7eb 70px,#e5e7eb 140px);
-  opacity:.15;
-  animation:roadMove 14s linear infinite;
-  z-index:-1;
+  position:fixed;
+  bottom:-12%;
+  width:300%;
+  height:36%;
+  background:repeating-linear-gradient(
+    90deg,#cbd5e1 0,#cbd5e1 70px,#e5e7eb 70px,#e5e7eb 140px);
+  opacity:.15;
+  animation:roadMove 14s linear infinite;
+  z-index:-1;
 }
 @keyframes roadMove{
-  to{transform:translateX(-50%)}
+  to{transform:translateX(-50%)}
 }
 body.light .road{opacity:.08}
 
 /* Cars */
 .car{
-  position:fixed;
-  bottom:6%;
-  font-size:40px;
-  opacity:.45;
-  animation:drive 20s linear infinite;
+  position:fixed;
+  bottom:6%;
+  font-size:40px;
+  opacity:.45;
+  animation:drive 20s linear infinite;
 }
 .car:nth-child(1){animation-duration:22s}
 .car:nth-child(2){animation-duration:26s}
 .car:nth-child(3){animation-duration:30s}
 
 @keyframes drive{
-  from{transform:translateX(-20vw)}
-  to{transform:translateX(120vw)}
+  from{transform:translateX(-20vw)}
+  to{transform:translateX(120vw)}
 }
 
 /* ================= CARD ================= */
 .card{
-  width:420px;
-  background:var(--card-bg);
-  border-radius:20px;
-  padding:28px 28px 30px;
-  box-shadow:0 30px 80px rgba(0,0,0,.25);
-  transition:background .3s;
+  width:420px;
+  background:var(--card-bg);
+  border-radius:20px;
+  padding:28px 28px 30px;
+  box-shadow:0 30px 80px rgba(0,0,0,.25);
+  transition:background .3s;
 }
 
 /* Header */
 .header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:6px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:6px;
 }
 .brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
-.brand span{font-size:26px}
+/* Add styles for the header image */
+.brand img{
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  object-fit: cover;
+}
 .brand h1{
-  font-size:20px;
-  font-weight:600;
-  margin:0;
+  font-size:20px;
+  font-weight:600;
+  margin:0;
 }
 
 /* Toggle */
 .toggle{
-  cursor:pointer;
-  font-size:16px;
-  padding:6px 10px;
-  border-radius:8px;
-  background:var(--input-bg);
-  border:1px solid var(--border);
+  cursor:pointer;
+  font-size:16px;
+  padding:6px 10px;
+  border-radius:8px;
+  background:var(--input-bg);
+  border:1px solid var(--border);
 }
 
 /* Subtitle */
 .subtitle{
-  font-size:13px;
-  color:var(--muted);
-  margin-bottom:22px;
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:22px;
 }
 
 /* ================= FORM ================= */
 .form{
-  display:grid;
-  gap:14px;
+  display:grid;
+  gap:14px;
 }
 
 .field{
-  display:flex;
-  align-items:center;
-  background:var(--input-bg);
-  border-radius:12px;
-  padding:0 14px;
-  height:46px;
-  border:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  background:var(--input-bg);
+  border-radius:12px;
+  padding:0 14px;
+  height:46px;
+  border:1px solid var(--border);
 }
 .field span{
-  opacity:.6;
-  font-size:14px;
-  margin-right:10px;
+  opacity:.6;
+  font-size:14px;
+  margin-right:10px;
 }
 .field input,
 .field select{
-  flex:1;
-  background:none;
-  border:none;
-  outline:none;
-  color:var(--text);
-  font-size:14px;
+  flex:1;
+  background:none;
+  border:none;
+  outline:none;
+  color:var(--text);
+  font-size:14px;
 }
 
 /* Button */
 button{
-  margin-top:10px;
-  height:44px;
-  border-radius:12px;
-  border:none;
-  background:var(--accent);
-  color:#052e16;
-  font-weight:600;
-  font-size:14px;
-  cursor:pointer;
+  margin-top:10px;
+  height:44px;
+  border-radius:12px;
+  border:none;
+  background:var(--accent);
+  color:#052e16;
+  font-weight:600;
+  font-size:14px;
+  cursor:pointer;
 }
 
 /* Footer */
 .footer{
-  display:flex;
-  justify-content:space-between;
-  margin-top:14px;
-  font-size:11px;
-  color:var(--muted);
+  display:flex;
+  justify-content:space-between;
+  margin-top:14px;
+  font-size:11px;
+  color:var(--muted);
 }
 
 /* Popup */
 .popup{
-  position:fixed;
-  top:20px;
-  right:20px;
-  background:var(--accent);
-  color:#052e16;
-  padding:12px 18px;
-  border-radius:10px;
-  font-size:13px;
-  font-weight:600;
-  display:none;
+  position:fixed;
+  top:20px;
+  right:20px;
+  background:var(--accent);
+  color:#052e16;
+  padding:12px 18px;
+  border-radius:10px;
+  font-size:13px;
+  font-weight:600;
+  display:none;
 }
 </style>
 </head>
@@ -211,43 +217,43 @@ button{
 <div class="car">🚙</div>
 
 <div class="card">
-  <div class="header">
-    <div class="brand">
-      <span>🚘</span>
-      <h1>AutoCare Plus</h1>
-    </div>
-    <div class="toggle" id="toggle">🌙</div>
-  </div>
+  <div class="header">
+    <div class="brand">
+            <img src="image_0.png" alt="Car Logo">
+      <h1>AutoCare Plus</h1>
+    </div>
+    <div class="toggle" id="toggle">🌙</div>
+  </div>
 
-  <div class="subtitle">Smart vehicle service orchestration</div>
+  <div class="subtitle">Smart vehicle service orchestration</div>
 
-  <div class="form">
-    <div class="field">
-      <span>🔢</span>
-      <input id="vehicle" placeholder="Vehicle registration">
-    </div>
+  <div class="form">
+    <div class="field">
+      <span>🔢</span>
+      <input id="vehicle" placeholder="Vehicle registration">
+    </div>
 
-    <div class="field">
-      <span>👤</span>
-      <input id="customer" placeholder="Customer name">
-    </div>
+    <div class="field">
+      <span>👤</span>
+      <input id="customer" placeholder="Customer name">
+    </div>
 
-    <div class="field">
-      <span>🛠️</span>
-      <select id="service">
-        <option>General Service</option>
-        <option>Repair</option>
-        <option>Diagnostics</option>
-      </select>
-    </div>
+    <div class="field">
+      <span>🛠️</span>
+      <select id="service">
+        <option>General Service</option>
+        <option>Repair</option>
+        <option>Diagnostics</option>
+      </select>
+    </div>
 
-    <button id="submit">Submit Service Order</button>
-  </div>
+    <button id="submit">Submit Service Order</button>
+  </div>
 
-  <div class="footer">
-    <span>Live system • Real-time sync</span>
-    <span id="time"></span>
-  </div>
+  <div class="footer">
+    <span>Live system • Real-time sync</span>
+    <span id="time"></span>
+  </div>
 </div>
 
 <div class="popup" id="popup">Order submitted successfully</div>
@@ -259,12 +265,12 @@ from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 
 /* Firebase */
 const app = initializeApp({
-  apiKey: "AIzaSyD9cPmUCMEtT7XukcAxmeS50jKh1A2f31Q",
-  authDomain: "auto-care-plus-e7fdf.firebaseapp.com",
-  projectId: "auto-care-plus-e7fdf",
-  storageBucket: "auto-care-plus-e7fdf.firebasestorage.app",
-  messagingSenderId: "746107164946",
-  appId: "1:746107164946:web:5951433bf11f0cadedfbcb"
+  apiKey: "AIzaSyD9cPmUCMEtT7XukcAxmeS50jKh1A2f31Q",
+  authDomain: "auto-care-plus-e7fdf.firebaseapp.com",
+  projectId: "auto-care-plus-e7fdf",
+  storageBucket: "auto-care-plus-e7fdf.firebasestorage.app",
+  messagingSenderId: "746107164946",
+  appId: "1:746107164946:web:5951433bf11f0cadedfbcb"
 });
 const db = getFirestore(app);
 
@@ -273,15 +279,15 @@ time.innerText = new Date().toLocaleString();
 
 /* Submit */
 submit.onclick = async()=>{
-  await addDoc(collection(db,"jobs"),{
-    vehicleNumber:vehicle.value,
-    customerName:customer.value,
-    serviceType:service.value,
-    status:"NEW",
-    createdAt:serverTimestamp()
-  });
-  popup.style.display="block";
-  setTimeout(()=>popup.style.display="none",2000);
+  await addDoc(collection(db,"jobs"),{
+    vehicleNumber:vehicle.value,
+    customerName:customer.value,
+    serviceType:service.value,
+    status:"NEW",
+    createdAt:serverTimestamp()
+  });
+  popup.style.display="block";
+  setTimeout(()=>popup.style.display="none",2000);
 };
 
 /* ===== DARK / LIGHT TOGGLE ===== */
@@ -289,15 +295,15 @@ const toggle=document.getElementById("toggle");
 const savedTheme=localStorage.getItem("theme");
 
 if(savedTheme==="light"){
-  document.body.classList.add("light");
-  toggle.textContent="☀️";
+  document.body.classList.add("light");
+  toggle.textContent="☀️";
 }
 
 toggle.onclick=()=>{
-  document.body.classList.toggle("light");
-  const isLight=document.body.classList.contains("light");
-  toggle.textContent=isLight?"☀️":"🌙";
-  localStorage.setItem("theme",isLight?"light":"dark");
+  document.body.classList.toggle("light");
+  const isLight=document.body.classList.contains("light");
+  toggle.textContent=isLight?"☀️":"🌙";
+  localStorage.setItem("theme",isLight?"light":"dark");
 };
 </script>
 
