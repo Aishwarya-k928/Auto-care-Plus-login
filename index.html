@@ -6,215 +6,230 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* ===============================
-   BASE + WALLPAPER
-================================ */
+/* ================= THEME VARIABLES ================= */
+:root{
+  --bg-main:#0b1020;
+  --card-bg:rgba(15,23,42,.92);
+  --input-bg:#020617;
+  --border:rgba(255,255,255,.06);
+  --text:#ffffff;
+  --muted:#9ca3af;
+  --accent:#22c55e;
+}
+
+body.light{
+  --bg-main:#f8fafc;
+  --card-bg:#ffffff;
+  --input-bg:#f1f5f9;
+  --border:#e5e7eb;
+  --text:#020617;
+  --muted:#64748b;
+  --accent:#16a34a;
+}
+
+/* ================= BASE ================= */
 html,body{height:100%}
 body{
   margin:0;
   font-family:"Inter","Segoe UI",sans-serif;
-  color:#fff;
-  background:url("./bmw-wallpaper.jpg") center/cover no-repeat fixed;
-  overflow:hidden;
-}
-
-/* Dark cinematic overlay */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:linear-gradient(
-    180deg,
-    rgba(2,6,23,.55),
-    rgba(2,6,23,.75)
-  );
-  z-index:-1;
-}
-
-/* Headlight reflection sweep */
-body::after{
-  content:"";
-  position:fixed;
-  inset:-40%;
-  background:linear-gradient(
-    115deg,
-    transparent 38%,
-    rgba(255,255,255,.12) 46%,
-    rgba(255,255,255,.35) 50%,
-    rgba(255,255,255,.12) 54%,
-    transparent 62%
-  );
-  transform:translateX(-120%);
-  animation:headlightSweep 6s linear infinite;
-  mix-blend-mode:screen;
-  z-index:-1;
-}
-@keyframes headlightSweep{
-  0%{transform:translateX(-120%)}
-  50%,100%{transform:translateX(120%)}
-}
-
-/* ===============================
-   RACING BACKGROUND
-================================ */
-.race-bg{position:fixed;inset:0;z-index:0;pointer-events:none}
-.road{
-  position:absolute;
-  bottom:0;
-  width:300%;
-  height:42%;
-  background:repeating-linear-gradient(
-    90deg,#111 0,#111 60px,#eee 60px,#eee 120px);
-  opacity:.25;
-}
-.car{position:absolute;bottom:18%;font-size:64px;filter:drop-shadow(0 12px 30px #000)}
-.car1{bottom:20%}
-.car2{bottom:26%;font-size:56px}
-.car3{bottom:14%;font-size:60px}
-
-/* ===============================
-   UI CONTAINER
-================================ */
-.ui-wrap{
-  position:relative;
-  z-index:2;
-  height:100%;
+  background:var(--bg-main);
+  color:var(--text);
   display:flex;
   align-items:center;
   justify-content:center;
+  overflow:hidden;
+  transition:background .3s,color .3s;
 }
 
-/* Glass card */
+/* ================= BACKGROUND ================= */
+.bg{
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at top,#1e293b,transparent);
+  z-index:-2;
+}
+body.light .bg{
+  background:radial-gradient(circle at top,#e2e8f0,transparent);
+}
+
+/* Road (subtle) */
+.road{
+  position:fixed;
+  bottom:-12%;
+  width:300%;
+  height:36%;
+  background:repeating-linear-gradient(
+    90deg,#cbd5e1 0,#cbd5e1 70px,#e5e7eb 70px,#e5e7eb 140px);
+  opacity:.15;
+  animation:roadMove 14s linear infinite;
+  z-index:-1;
+}
+@keyframes roadMove{
+  to{transform:translateX(-50%)}
+}
+body.light .road{opacity:.08}
+
+/* Cars */
+.car{
+  position:fixed;
+  bottom:6%;
+  font-size:40px;
+  opacity:.45;
+  animation:drive 20s linear infinite;
+}
+.car:nth-child(1){animation-duration:22s}
+.car:nth-child(2){animation-duration:26s}
+.car:nth-child(3){animation-duration:30s}
+
+@keyframes drive{
+  from{transform:translateX(-20vw)}
+  to{transform:translateX(120vw)}
+}
+
+/* ================= CARD ================= */
 .card{
-  width:440px;
-  padding:36px 34px 40px;
-  border-radius:22px;
-  background:rgba(15,23,42,.88);
-  backdrop-filter:blur(10px);
-  box-shadow:
-    0 40px 90px rgba(0,0,0,.7),
-    inset 0 1px 0 rgba(255,255,255,.08);
+  width:420px;
+  background:var(--card-bg);
+  border-radius:20px;
+  padding:28px 28px 30px;
+  box-shadow:0 30px 80px rgba(0,0,0,.25);
+  transition:background .3s;
 }
 
-/* Brand */
+/* Header */
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:6px;
+}
 .brand{
   display:flex;
   align-items:center;
-  gap:12px;
-  margin-bottom:8px;
+  gap:10px;
 }
-.brand-logo{
-  font-size:32px;
+.brand span{font-size:26px}
+.brand h1{
+  font-size:20px;
+  font-weight:600;
+  margin:0;
 }
-.brand-title{
-  font-size:22px;
-  font-weight:700;
-  letter-spacing:.3px;
+
+/* Toggle */
+.toggle{
+  cursor:pointer;
+  font-size:16px;
+  padding:6px 10px;
+  border-radius:8px;
+  background:var(--input-bg);
+  border:1px solid var(--border);
 }
 
 /* Subtitle */
 .subtitle{
-  color:#94a3b8;
-  font-size:14px;
-  margin-bottom:26px;
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:22px;
 }
 
-/* Inputs */
+/* ================= FORM ================= */
+.form{
+  display:grid;
+  gap:14px;
+}
+
 .field{
-  position:relative;
-  margin-bottom:16px;
+  display:flex;
+  align-items:center;
+  background:var(--input-bg);
+  border-radius:12px;
+  padding:0 14px;
+  height:46px;
+  border:1px solid var(--border);
 }
 .field span{
-  position:absolute;
-  left:14px;
-  top:50%;
-  transform:translateY(-50%);
   opacity:.6;
+  font-size:14px;
+  margin-right:10px;
 }
-input,select{
-  width:100%;
-  padding:14px 14px 14px 42px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(2,6,23,.9);
-  color:#fff;
-  font-size:15px;
-  outline:none;
-  transition:.25s;
-}
-input:focus,select:focus{
-  border-color:#22c55e;
-  box-shadow:0 0 0 3px rgba(34,197,94,.15);
-}
-
-/* CTA Button */
-button{
-  width:100%;
-  margin-top:12px;
-  padding:15px;
-  border-radius:14px;
+.field input,
+.field select{
+  flex:1;
+  background:none;
   border:none;
-  background:linear-gradient(135deg,#22c55e,#4ade80);
-  color:#052e16;
-  font-size:16px;
-  font-weight:700;
-  cursor:pointer;
-  transition:.25s;
+  outline:none;
+  color:var(--text);
+  font-size:14px;
 }
-button:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(34,197,94,.35)}
-button:active{transform:translateY(0)}
 
-/* Footer info */
-.meta{
+/* Button */
+button{
+  margin-top:10px;
+  height:44px;
+  border-radius:12px;
+  border:none;
+  background:var(--accent);
+  color:#052e16;
+  font-weight:600;
+  font-size:14px;
+  cursor:pointer;
+}
+
+/* Footer */
+.footer{
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  margin-top:16px;
-  font-size:12px;
-  color:#94a3b8;
+  margin-top:14px;
+  font-size:11px;
+  color:var(--muted);
 }
 
 /* Popup */
 .popup{
   position:fixed;
-  top:28px;right:28px;
-  background:linear-gradient(135deg,#22c55e,#4ade80);
+  top:20px;
+  right:20px;
+  background:var(--accent);
   color:#052e16;
-  padding:14px 22px;
-  border-radius:14px;
-  font-weight:700;
+  padding:12px 18px;
+  border-radius:10px;
+  font-size:13px;
+  font-weight:600;
   display:none;
-  z-index:3;
 }
 </style>
 </head>
 
 <body>
 
-<!-- Racing animation -->
-<div class="race-bg">
-  <div class="road"></div>
-  <div class="car car1">🏎️</div>
-  <div class="car car2">🚗</div>
-  <div class="car car3">🚙</div>
-</div>
+<div class="bg"></div>
+<div class="road"></div>
 
-<div class="ui-wrap">
-  <div class="card">
+<div class="car">🏎️</div>
+<div class="car">🚗</div>
+<div class="car">🚙</div>
+
+<div class="card">
+  <div class="header">
     <div class="brand">
-      <div class="brand-logo">🚘</div>
-      <div class="brand-title">AutoCare Plus</div>
+      <span>🚘</span>
+      <h1>AutoCare Plus</h1>
     </div>
-    <div class="subtitle">Smart vehicle service orchestration</div>
+    <div class="toggle" id="toggle">🌙</div>
+  </div>
 
+  <div class="subtitle">Smart vehicle service orchestration</div>
+
+  <div class="form">
     <div class="field">
       <span>🔢</span>
-      <input id="vehicle" placeholder="Vehicle Registration Number">
+      <input id="vehicle" placeholder="Vehicle registration">
     </div>
 
     <div class="field">
       <span>👤</span>
-      <input id="customer" placeholder="Customer Name">
+      <input id="customer" placeholder="Customer name">
     </div>
 
     <div class="field">
@@ -227,21 +242,22 @@ button:active{transform:translateY(0)}
     </div>
 
     <button id="submit">Submit Service Order</button>
+  </div>
 
-    <div class="meta">
-      <span>Live system • Real-time sync</span>
-      <span id="time"></span>
-    </div>
+  <div class="footer">
+    <span>Live system • Real-time sync</span>
+    <span id="time"></span>
   </div>
 </div>
 
-<div class="popup" id="popup">✅ Order Submitted Successfully</div>
+<div class="popup" id="popup">Order submitted successfully</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp }
+import { getFirestore, collection, addDoc, serverTimestamp }
 from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 
+/* Firebase */
 const app = initializeApp({
   apiKey: "AIzaSyD9cPmUCMEtT7XukcAxmeS50jKh1A2f31Q",
   authDomain: "auto-care-plus-e7fdf.firebaseapp.com",
@@ -252,8 +268,10 @@ const app = initializeApp({
 });
 const db = getFirestore(app);
 
+/* Time */
 time.innerText = new Date().toLocaleString();
 
+/* Submit */
 submit.onclick = async()=>{
   await addDoc(collection(db,"jobs"),{
     vehicleNumber:vehicle.value,
@@ -263,39 +281,24 @@ submit.onclick = async()=>{
     createdAt:serverTimestamp()
   });
   popup.style.display="block";
-  setTimeout(()=>popup.style.display="none",2400);
+  setTimeout(()=>popup.style.display="none",2000);
 };
 
-/* Speed animation */
-let speed=12;
-const cars=document.querySelectorAll(".car");
-const road=document.querySelector(".road");
+/* ===== DARK / LIGHT TOGGLE ===== */
+const toggle=document.getElementById("toggle");
+const savedTheme=localStorage.getItem("theme");
 
-const style=document.createElement("style");
-style.innerHTML=`
-@keyframes drive{
-  0%{transform:translateX(-20vw)}
-  50%{transform:translateX(120vw)}
-  100%{transform:translateX(-20vw)}
+if(savedTheme==="light"){
+  document.body.classList.add("light");
+  toggle.textContent="☀️";
 }
-@keyframes roadMove{to{transform:translateX(-50%)}}
-`;
-document.head.appendChild(style);
 
-function applySpeed(){
-  cars.forEach((c,i)=>c.style.animation=`drive ${speed+i*2}s linear infinite`);
-  road.style.animation=`roadMove ${speed/4}s linear infinite`;
-}
-applySpeed();
-
-onSnapshot(collection(db,"jobs"),snap=>{
-  let load=0;
-  snap.forEach(d=>{
-    if(["REPAIR","QUALITY_CHECK"].includes(d.data().status)) load++;
-  });
-  speed=Math.max(6,16-load);
-  applySpeed();
-});
+toggle.onclick=()=>{
+  document.body.classList.toggle("light");
+  const isLight=document.body.classList.contains("light");
+  toggle.textContent=isLight?"☀️":"🌙";
+  localStorage.setItem("theme",isLight?"light":"dark");
+};
 </script>
 
 </body>
