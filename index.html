@@ -25,7 +25,6 @@
             align-items: center; justify-content: center;
         }
 
-        /* 1. ANIMATED BACKGROUND (Subtle Zoom) */
         .hero-bg {
             position: fixed; inset: 0;
             background: 
@@ -40,7 +39,6 @@
             to { transform: scale(1.15) rotate(1deg); }
         }
 
-        /* 2. ANIMATED CIRCUITS (The flowing data lines) */
         .circuits {
             position: fixed; inset: 0;
             background-image: 
@@ -58,7 +56,6 @@
             to { background-position: 80px 80px; }
         }
 
-        /* 3. SCANNING LINE EFFECT */
         .scan-line {
             position: fixed; inset: 0;
             background: linear-gradient(to bottom, transparent, rgba(0, 210, 255, 0.1), transparent);
@@ -72,7 +69,6 @@
             to { transform: translateY(100vh); }
         }
 
-        /* MAIN UI CONTAINER */
         .main-container {
             width: 95%; max-width: 1100px;
             display: flex; flex-direction: column; gap: 25px;
@@ -80,7 +76,6 @@
             z-index: 10;
         }
 
-        /* THE HORIZONTAL GLASS BAR */
         .glass-bar {
             width: 100%;
             background: var(--glass);
@@ -89,7 +84,7 @@
             border-radius: 20px;
             padding: 30px 50px;
             display: grid;
-            grid-template-columns: 1fr 1fr; /* Adjusted for removed nav */
+            grid-template-columns: 1fr 1fr;
             align-items: center;
             box-shadow: 0 40px 100px rgba(0,0,0,0.6);
             border-top: 1px solid rgba(255,255,255,0.15);
@@ -107,7 +102,6 @@
         .theme-btn { cursor: pointer; font-size: 20px; opacity: 0.7; }
         .theme-btn:hover { opacity: 1; }
 
-        /* THE UPDATED SUBMIT BUTTON */
         .submit-btn {
             background: linear-gradient(135deg, #0f172a, #1e293b);
             border: 1px solid var(--accent-cyan);
@@ -123,7 +117,6 @@
             transform: scale(1.05);
         }
 
-        /* FORM FIELDS ROW */
         .form-overlay {
             width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
         }
@@ -136,7 +129,20 @@
         }
         .input-box:focus { border-color: var(--accent-cyan); box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); }
 
-        /* SUCCESS POPUP */
+        /* CREDENTIALS SECTION */
+        .credential-bar {
+            margin-top: 10px;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            font-size: 12px;
+            display: flex;
+            gap: 30px;
+            color: rgba(255,255,255,0.6);
+        }
+        .credential-bar span b { color: var(--accent-cyan); margin-right: 5px; }
+
         .popup {
             position: fixed; top: 40px; left: 50%; transform: translateX(-50%) translateY(-150px);
             background: #10b981; color: white; padding: 15px 35px;
@@ -176,6 +182,12 @@
             <option>Diagnostic Scan</option>
         </select>
     </div>
+
+    <div class="credential-bar">
+        <span><b>SYSTEM ACCESS ID:</b> autocareplus@org.com</span>
+        <span><b>ACCESS TOKEN:</b> AUTOcare</span>
+        <span><b>AUTH LEVEL:</b> MANAGEMENT / STAFF</span>
+    </div>
 </div>
 
 <div class="popup" id="popup">CORE DATABASE SYNC COMPLETE</div>
@@ -197,6 +209,9 @@
     const db = getFirestore(app);
 
     const submitBtn = document.getElementById("submit");
+    const vehicle = document.getElementById("vehicle");
+    const customer = document.getElementById("customer");
+    const service = document.getElementById("service");
 
     submitBtn.onclick = async () => {
         if(!vehicle.value || !customer.value || !service.value) {
@@ -226,10 +241,9 @@
         }
     };
 
-    // Dark/Light Toggle logic
     const toggle = document.getElementById("toggle");
     toggle.onclick = () => {
-        document.body.classList.toggle("light"); // Note: You can add .light styles if needed
+        document.body.classList.toggle("light");
         toggle.textContent = document.body.classList.contains("light") ? "☀️" : "🌙";
     };
 </script>
