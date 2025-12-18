@@ -1,151 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>AutoCare Plus | Command Center</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --accent-cyan: #00d2ff;
-            --glass: rgba(15, 23, 42, 0.75);
-            --border: rgba(255, 255, 255, 0.1);
-        }
+    <meta charset="UTF-8">
+    <title>AutoCare Plus | Command Center</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --accent-cyan: #00d2ff;
+            --glass: rgba(15, 23, 42, 0.75);
+            --border: rgba(255, 255, 255, 0.1);
+        }
 
-        * { box-sizing: border-box; transition: all 0.3s ease; }
+        * { box-sizing: border-box; transition: all 0.3s ease; }
 
-        body, html {
-            margin: 0; padding: 0; height: 100%;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #020617;
-            color: white;
-            overflow: hidden;
-            display: flex;
-            align-items: center; justify-content: center;
-        }
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #020617;
+            color: white;
+            overflow: hidden;
+            display: flex;
+            align-items: center; justify-content: center;
+        }
 
-        /* 1. ANIMATED BACKGROUND (Subtle Zoom) */
-        .hero-bg {
-            position: fixed; inset: 0;
-            background: 
-                linear-gradient(to bottom, rgba(2, 6, 23, 0.4), rgba(2, 6, 23, 0.9)),
-                url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
-            z-index: -3;
-            animation: bgMove 20s infinite alternate ease-in-out;
-        }
+        /* 1. ANIMATED BACKGROUND (Subtle Zoom) */
+        .hero-bg {
+            position: fixed; inset: 0;
+            background: 
+                linear-gradient(to bottom, rgba(2, 6, 23, 0.4), rgba(2, 6, 23, 0.9)),
+                url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+            z-index: -3;
+            animation: bgMove 20s infinite alternate ease-in-out;
+        }
 
-        @keyframes bgMove {
-            from { transform: scale(1); }
-            to { transform: scale(1.15) rotate(1deg); }
-        }
+        @keyframes bgMove {
+            from { transform: scale(1); }
+            to { transform: scale(1.15) rotate(1deg); }
+        }
 
-        /* 2. ANIMATED CIRCUITS (The flowing data lines) */
-        .circuits {
-            position: fixed; inset: 0;
-            background-image: 
-                linear-gradient(var(--border) 1px, transparent 1px),
-                linear-gradient(90deg, var(--border) 1px, transparent 1px);
-            background-size: 80px 80px;
-            mask-image: radial-gradient(circle, black, transparent 90%);
-            opacity: 0.3;
-            z-index: -2;
-            animation: circuitFlow 10s linear infinite;
-        }
+        /* 2. ANIMATED CIRCUITS (The flowing data lines) */
+        .circuits {
+            position: fixed; inset: 0;
+            background-image: 
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(circle, black, transparent 90%);
+            opacity: 0.3;
+            z-index: -2;
+            animation: circuitFlow 10s linear infinite;
+        }
 
-        @keyframes circuitFlow {
-            from { background-position: 0 0; }
-            to { background-position: 80px 80px; }
-        }
+        @keyframes circuitFlow {
+            from { background-position: 0 0; }
+            to { background-position: 80px 80px; }
+        }
 
-        /* 3. SCANNING LINE EFFECT */
-        .scan-line {
-            position: fixed; inset: 0;
-            background: linear-gradient(to bottom, transparent, rgba(0, 210, 255, 0.1), transparent);
-            height: 100px; width: 100%;
-            z-index: -1;
-            animation: scan 4s linear infinite;
-        }
+        /* 3. SCANNING LINE EFFECT */
+        .scan-line {
+            position: fixed; inset: 0;
+            background: linear-gradient(to bottom, transparent, rgba(0, 210, 255, 0.1), transparent);
+            height: 100px; width: 100%;
+            z-index: -1;
+            animation: scan 4s linear infinite;
+        }
 
-        @keyframes scan {
-            from { transform: translateY(-100vh); }
-            to { transform: translateY(100vh); }
-        }
+        @keyframes scan {
+            from { transform: translateY(-100vh); }
+            to { transform: translateY(100vh); }
+        }
 
-        /* MAIN UI CONTAINER */
-        .main-container {
-            width: 95%; max-width: 1100px;
-            display: flex; flex-direction: column; gap: 25px;
-            align-items: center;
-            z-index: 10;
-        }
+        /* MAIN UI CONTAINER */
+        .main-container {
+            width: 95%; max-width: 1100px;
+            display: flex; flex-direction: column; gap: 25px;
+            align-items: center;
+            z-index: 10;
+        }
 
-        /* THE HORIZONTAL GLASS BAR */
-        .glass-bar {
-            width: 100%;
-            background: var(--glass);
-            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 30px 50px;
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Adjusted for removed nav */
-            align-items: center;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
-            border-top: 1px solid rgba(255,255,255,0.15);
-        }
+        /* THE HORIZONTAL GLASS BAR */
+        .glass-bar {
+            width: 100%;
+            background: var(--glass);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px 50px;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Adjusted for removed nav */
+            align-items: center;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
 
-        .brand-section { border-left: 4px solid var(--accent-cyan); padding-left: 25px; }
-        .brand-section h1 { 
-            font-size: 48px; margin: 0; font-weight: 700; letter-spacing: -2px; 
-            text-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
-        }
-        .brand-section p { font-size: 14px; color: var(--accent-cyan); margin: 5px 0 0; text-transform: uppercase; letter-spacing: 3px; font-weight: 600; }
+        .brand-section { border-left: 4px solid var(--accent-cyan); padding-left: 25px; }
+        .brand-section h1 { 
+            font-size: 48px; margin: 0; font-weight: 700; letter-spacing: -2px; 
+            text-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+        }
+        .brand-section p { font-size: 14px; color: var(--accent-cyan); margin: 5px 0 0; text-transform: uppercase; letter-spacing: 3px; font-weight: 600; }
 
-        .action-zone { display: flex; justify-content: flex-end; align-items: center; gap: 25px; }
+        .action-zone { display: flex; justify-content: flex-end; align-items: center; gap: 25px; }
 
-        .theme-btn { cursor: pointer; font-size: 20px; opacity: 0.7; }
-        .theme-btn:hover { opacity: 1; }
+        .theme-btn { cursor: pointer; font-size: 20px; opacity: 0.7; }
+        .theme-btn:hover { opacity: 1; }
 
-        /* THE UPDATED SUBMIT BUTTON */
-        .submit-btn {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            border: 1px solid var(--accent-cyan);
-            color: white; padding: 16px 36px; border-radius: 12px;
-            font-weight: 700; cursor: pointer;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
-            text-transform: uppercase; letter-spacing: 1px;
-            white-space: nowrap;
-        }
-        .submit-btn:hover { 
-            background: var(--accent-cyan); color: #020617; 
-            box-shadow: 0 0 40px rgba(0, 210, 255, 0.6);
-            transform: scale(1.05);
-        }
+        /* THE UPDATED SUBMIT BUTTON */
+        .submit-btn {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            border: 1px solid var(--accent-cyan);
+            color: white; padding: 16px 36px; border-radius: 12px;
+            font-weight: 700; cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
+            text-transform: uppercase; letter-spacing: 1px;
+            white-space: nowrap;
+        }
+        .submit-btn:hover { 
+            background: var(--accent-cyan); color: #020617; 
+            box-shadow: 0 0 40px rgba(0, 210, 255, 0.6);
+            transform: scale(1.05);
+        }
 
-        /* FORM FIELDS ROW */
-        .form-overlay {
-            width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
-        }
-        .input-box {
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid var(--border);
-            border-radius: 14px; padding: 18px;
-            color: white; font-family: inherit; font-size: 15px;
-            outline: none; backdrop-filter: blur(10px);
-        }
-        .input-box:focus { border-color: var(--accent-cyan); box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); }
+        /* FORM FIELDS ROW */
+        .form-overlay {
+            width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+        }
+        .input-box {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid var(--border);
+            border-radius: 14px; padding: 18px;
+            color: white; font-family: inherit; font-size: 15px;
+            outline: none; backdrop-filter: blur(10px);
+        }
+        .input-box:focus { border-color: var(--accent-cyan); box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); }
 
-        /* SUCCESS POPUP */
-        .popup {
-            position: fixed; top: 40px; left: 50%; transform: translateX(-50%) translateY(-150px);
-            background: #10b981; color: white; padding: 15px 35px;
-            border-radius: 50px; font-weight: 700; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 1000; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-        .popup.show { transform: translateX(-50%) translateY(0); }
+        /* SUCCESS POPUP */
+        .popup {
+            position: fixed; top: 40px; left: 50%; transform: translateX(-50%) translateY(-150px);
+            background: #10b981; color: white; padding: 15px 35px;
+            border-radius: 50px; font-weight: 700; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .popup.show { transform: translateX(-50%) translateY(0); }
 
-    </style>
+    </style>
 </head>
 <body>
 
@@ -154,84 +154,84 @@
 <div class="scan-line"></div>
 
 <div class="main-container">
-    <div class="glass-bar">
-        <div class="brand-section">
-            <h1>AutoCare Plus</h1>
-            <p>Unified Command Center</p>
-        </div>
+    <div class="glass-bar">
+        <div class="brand-section">
+            <h1>AutoCare Plus</h1>
+            <p>Unified Command Center</p>
+        </div>
 
-        <div class="action-zone">
-            <span class="theme-btn" id="toggle">🌙</span>
-            <button class="submit-btn" id="submit">Submit Service</button>
-        </div>
-    </div>
+        <div class="action-zone">
+            <span class="theme-btn" id="toggle">🌙</span>
+            <button class="submit-btn" id="submit">Submit Service</button>
+        </div>
+    </div>
 
-    <div class="form-overlay">
-        <input class="input-box" id="vehicle" placeholder="REGISTRATION NUMBER">
-        <input class="input-box" id="customer" placeholder="CUSTOMER IDENTITY">
-        <select class="input-box" id="service">
-            <option value="" disabled selected>OPERATION TYPE</option>
-            <option>General Service</option>
-            <option>Mechanical Repair</option>
-            <option>Diagnostic Scan</option>
-        </select>
-    </div>
+    <div class="form-overlay">
+        <input class="input-box" id="vehicle" placeholder="REGISTRATION NUMBER">
+        <input class="input-box" id="customer" placeholder="CUSTOMER IDENTITY">
+        <select class="input-box" id="service">
+            <option value="" disabled selected>OPERATION TYPE</option>
+            <option>General Service</option>
+            <option>Mechanical Repair</option>
+            <option>Diagnostic Scan</option>
+        </select>
+    </div>
 </div>
 
 <div class="popup" id="popup">CORE DATABASE SYNC COMPLETE</div>
 
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } 
-    from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } 
+    from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 
-    /* FIREBASE CONFIG */
-    const app = initializeApp({
-        apiKey: "AIzaSyD9cPmUCMEtT7XukcAxmeS50jKh1A2f31Q",
-        authDomain: "auto-care-plus-e7fdf.firebaseapp.com",
-        projectId: "auto-care-plus-e7fdf",
-        storageBucket: "auto-care-plus-e7fdf.firebasestorage.app",
-        messagingSenderId: "746107164946",
-        appId: "1:746107164946:web:5951433bf11f0cadedfbcb"
-    });
-    const db = getFirestore(app);
+    /* FIREBASE CONFIG */
+    const app = initializeApp({
+        apiKey: "AIzaSyD9cPmUCMEtT7XukcAxmeS50jKh1A2f31Q",
+        authDomain: "auto-care-plus-e7fdf.firebaseapp.com",
+        projectId: "auto-care-plus-e7fdf",
+        storageBucket: "auto-care-plus-e7fdf.firebasestorage.app",
+        messagingSenderId: "746107164946",
+        appId: "1:746107164946:web:5951433bf11f0cadedfbcb"
+    });
+    const db = getFirestore(app);
 
-    const submitBtn = document.getElementById("submit");
+    const submitBtn = document.getElementById("submit");
 
-    submitBtn.onclick = async () => {
-        if(!vehicle.value || !customer.value || !service.value) {
-            alert("⚠️ SYSTEM ERROR: INCOMPLETE DATA"); return;
-        }
+    submitBtn.onclick = async () => {
+        if(!vehicle.value || !customer.value || !service.value) {
+            alert("⚠️ SYSTEM ERROR: INCOMPLETE DATA"); return;
+        }
 
-        submitBtn.innerText = "UPLOADING...";
-        
-        try {
-            await addDoc(collection(db, "jobs"), {
-                vehicleNumber: vehicle.value,
-                customerName: customer.value,
-                serviceType: service.value,
-                status: "NEW",
-                createdAt: serverTimestamp()
-            });
+        submitBtn.innerText = "UPLOADING...";
+        
+        try {
+            await addDoc(collection(db, "jobs"), {
+                vehicleNumber: vehicle.value,
+                customerName: customer.value,
+                serviceType: service.value,
+                status: "NEW",
+                createdAt: serverTimestamp()
+            });
 
-            const popup = document.getElementById("popup");
-            popup.classList.add("show");
-            setTimeout(() => popup.classList.remove("show"), 3000);
-            
-            vehicle.value = ""; customer.value = ""; service.selectedIndex = 0;
-        } catch (e) {
-            alert("CONNECTION LOST");
-        } finally {
-            submitBtn.innerText = "Submit Service";
-        }
-    };
+            const popup = document.getElementById("popup");
+            popup.classList.add("show");
+            setTimeout(() => popup.classList.remove("show"), 3000);
+            
+            vehicle.value = ""; customer.value = ""; service.selectedIndex = 0;
+        } catch (e) {
+            alert("CONNECTION LOST");
+        } finally {
+            submitBtn.innerText = "Submit Service";
+        }
+    };
 
-    // Dark/Light Toggle logic
-    const toggle = document.getElementById("toggle");
-    toggle.onclick = () => {
-        document.body.classList.toggle("light"); // Note: You can add .light styles if needed
-        toggle.textContent = document.body.classList.contains("light") ? "☀️" : "🌙";
-    };
+    // Dark/Light Toggle logic
+    const toggle = document.getElementById("toggle");
+    toggle.onclick = () => {
+        document.body.classList.toggle("light"); // Note: You can add .light styles if needed
+        toggle.textContent = document.body.classList.contains("light") ? "☀️" : "🌙";
+    };
 </script>
 
 </body>
